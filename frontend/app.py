@@ -1,3 +1,19 @@
+import snowflake.connector
+import streamlit as st
+
+
+def get_conn():
+    return snowflake.connector.connect(
+        account="HMFNMOY-SWC80553",
+        user="VINAYAKD",
+        authenticator="externalbrowser",
+        role="SYSADMIN",
+        warehouse="WH_AGENT",
+        database="APP_DB",
+        schema="APP_SCHEMA",
+    )
+
+
 import os
 import requests
 import streamlit as st
@@ -65,4 +81,17 @@ if q:
                     "content": f"Request failed: {e}",
                     "rows": []
                 })
+
+def run_query(sql):
+    conn = get_conn()
+    cur = conn.cursor()
+    cur.execute(sql)
+
+    cols = [c[0] for c in cur.description]
+    rows = cur.fetchall()
+
+    cur.close()
+    conn.close()
+
+    return cols, rows
 
