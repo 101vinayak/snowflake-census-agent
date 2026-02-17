@@ -15,6 +15,14 @@ A hosted AI-powered chat agent that answers natural-language questions about US 
 
 The system supports structured reasoning, ranking queries, and cross-metric joins — while enforcing strict domain and safety constraints.
 
+## Architecture
+
+LLM Planner (Snowflake Cortex)
+→ Structured QuerySpec / JoinSpec
+→ Deterministic SQL Compiler
+→ SQL Validator (hard guardrails)
+→ Snowflake execution
+→ Natural language summary
 ---
 
 ## Supported Question Types
